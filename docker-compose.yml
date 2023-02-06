@@ -1,0 +1,19 @@
+version: '3'
+services:
+  selenium:
+    image: selenium/standalone-chrome
+    container_name: 'selenium'
+    shm_size: "2gb"
+    ports:
+      - 4444:4444
+      - 7900:7900
+  python3:
+    restart: always
+    build: .
+    container_name: 'py3-container'
+    working_dir: '/var/app'
+    tty: true
+    volumes:
+      - ${SRC_PATH}:/var/app
+    depends_on:
+      - selenium
